@@ -12,8 +12,8 @@
 // WHEN I refresh the page
 // THEN the saved events persist
 
-// The array to store our information (id, time, and data)
-var DayPlannerData = []
+
+
 
 // Get current date and apply it to the HTML element with ID currentDay using Moment
 
@@ -21,6 +21,10 @@ function getCurrentDateTime() {
     var currentDate = moment().format('dddd, MMMM Do, h:mm:ss a');
     $("#currentDay").text(currentDate);
 }
+
+// The array to store our information (id, time, and data)
+
+var DayPlannerData = []
 
 // Create array for ID and element generation
 // Since schedule is from 9 to 5 we start at 9 and end at 17
@@ -30,10 +34,9 @@ for (time=9; time <=17; time++) {
     var id = time - 9;
     var plannerData = "";
     var displayHour = 0;
-    var amORpm = "";
-    
-    
+    var amORpm = "";  
 
+    // Sets AM or PM and display time to adjust for 12 hour clock
     if (time === 12) {
         displayHour = 12;
         amORpm = "PM"
@@ -44,6 +47,7 @@ for (time=9; time <=17; time++) {
         displayHour = time - 12;
         amORpm = "PM"
     }
+
     // Converts hour to string to use in array 
     displayHour.toString();
 
@@ -62,10 +66,21 @@ for (time=9; time <=17; time++) {
 // Verify our array creation correctly
 console.log(DayPlannerData);
 
-function createDayPlanner() {
+// Need to generate an element for time, text input and save button SEE CSS
+DayPlannerData.forEach(function(index) {
+    //Create rows - works!
+    var Row = $("<form>").addClass("row");
+    $('.container').append(Row);
+    
+    var plannerTime = $("<div>").addClass("col hour")
+    
+    var plannerForm = $("<div>").addClass("col-md-6 present")
+    
+    var plannerButton = $("<div>").addClass("col saveBtn")
+    
 
-}
-
+   Row.append(plannerTime, plannerForm, plannerButton)
+})
 
 
 
@@ -73,4 +88,3 @@ function createDayPlanner() {
 // Function to get current date 
 getCurrentDateTime();
 
-createDayPlanner();
