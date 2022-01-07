@@ -67,16 +67,17 @@ for (time=9; time <=17; time++) {
 console.log(DayPlannerData);
 
 // Need to generate an element for time, text input and save button SEE CSS
-DayPlannerData.forEach(function(index) {
+DayPlannerData.forEach(function() {
     //Create rows - works!
     var Row = $("<form>").addClass("row");
     $('.container').append(Row);
     
-    var plannerTime = $("<div>").addClass("col hour")
+    var plannerTime = $("<div>").addClass("col-md-1 hour")
+        plannerTime.text(displayHour)
     
-    var plannerForm = $("<div>").addClass("col-md-6 present")
+    var plannerForm = $("<textarea>").addClass("col-md-10 present")
     
-    var plannerButton = $("<div>").addClass("col saveBtn")
+    var plannerButton = $("<div>").addClass("col-md-1 saveBtn")
     
 
    Row.append(plannerTime, plannerForm, plannerButton)
