@@ -60,28 +60,42 @@ for (time=9; time <=17; time++) {
         plannerData: plannerData,
     }
 
-    DayPlannerData.push(plannerData);
+    DayPlannerData.push(plannerData)
 }
 
 // Verify our array creation correctly
 console.log(DayPlannerData);
 
-// Need to generate an element for time, text input and save button SEE CSS
-DayPlannerData.forEach(function() {
-    //Create rows - works!
-    var Row = $("<form>").addClass("row");
-    $('.container').append(Row);
+for (i=0; i< DayPlannerData.length; i++) {
     
-    var plannerTime = $("<div>").addClass("col-md-1 hour")
-        plannerTime.text(displayHour)
-    
-    var plannerForm = $("<textarea>").addClass("col-md-10 present")
-    
-    var plannerButton = $("<div>").addClass("col-md-1 saveBtn")
-    
+        //Create rows 
+        var Row = $("<form>").addClass("row");
+        $('.container').append(Row);
+        
+        // Create display time
+        var plannerTime = $("<div>").addClass("col-md-1 hour").text(DayPlannerData[i].displayHour + " " + DayPlannerData[i].amORpm)
+        
+        // Create text form, based on current time of day apply different classes
+        var plannerForm = $("<textarea>").addClass("col-md-10 textarea")
+        if (DayPlannerData[i].displayHour === moment().format("HH")) {
+            plannerForm.addClass("present");
+        } else if (DayPlannerData[i].displayHour < moment().format("HH")) {
+            plannerForm.addClass("past");
+        } else if (DayPlannerData[i].displayHour > moment().format("HH")) {
+            plannerForm.addClass("future");
+        }
+        
+        // Create save button HTML elements
+        var plannerButton = $("<div>").addClass("col-md-1 saveBtn")
+        
+        // Adds time, form and save button to each row
+       Row.append(plannerTime, plannerForm, plannerButton)
+}
 
-   Row.append(plannerTime, plannerForm, plannerButton)
-})
+
+
+
+
 
 
 
