@@ -12,9 +12,6 @@
 // WHEN I refresh the page
 // THEN the saved events persist
 
-
-
-
 // Get current date and apply it to the HTML element with ID currentDay using Moment
 
 function getCurrentDateTime() {
@@ -63,20 +60,21 @@ for (time=9; time <=17; time++) {
     DayPlannerData.push(plannerData)
 }
 
-// Verify our array creation correctly
-console.log(DayPlannerData);
-
-// Function to save our data to local storage
-
-function savePlannerData() {
-    localStorage.setItem("plannerData", JSON.stringify(plannerData));
-}
-
+// Function to display our data from local storage
 function displayPlannerData() {
-    for (i=0; i < DayPlannerData.length; i++) {
-        $("#" + DayPlannerData[i]).val(DayPlannerData[i].plannerData)
+    var retrieveData = JSON.parse(localStorage.getItem("DayPlannerData"));
+        
+    if (retrieveData) {
+        DayPlannerData = retrieveData;
     }
+    
+    for (i=0; i < DayPlannerData.length; i++) {
+        $("#" + i).val(DayPlannerData[i].plannerData);
+    }
+    
 }
+
+
 
 // Display our planner
 
@@ -100,7 +98,7 @@ for (i=0; i< DayPlannerData.length; i++) {
         }
         
         // Create save button HTML element
-        var plannerButton = $("<button>").addClass("col-md-1 saveBtn");
+        var plannerButton = $("<button type=button>").addClass("col-md-1 saveBtn");
         var buttonIcon = $("<i class='far fa-save fa-lg'></i>");
         plannerButton.append(buttonIcon);
         
@@ -108,21 +106,28 @@ for (i=0; i< DayPlannerData.length; i++) {
        Row.append(plannerTime, plannerForm, plannerButton);
 }
 
+// Listen for our save button click, run functions to save to local storage.
 $(".saveBtn").on("click", function(event) {
-    console.log("click")
-    var saveIndex = $(this).parent(".row").sibling(".description").attr("id");
-    DayPlannerData[saveIndex].plannerData = $(this).sibling(".description").val();
+    
+    // Finds the id in the current row by navigating DOM elements
+    var saveIndex = $(this).parent().children(".description").attr("id"); 
+   
+    // Saves text in that HTML text area at that id
+    text = $("#" + saveIndex).val();
+    
+    // Adds the text to our array at that index
+    DayPlannerData[saveIndex].plannerData = text;
 
-    savePlannerData(); 
+    // Save to local storage
+    localStorage.setItem("DayPlannerData", JSON.stringify(DayPlannerData));
+
+    // Function to display our saved planner data from local storage
     displayPlannerData();
 })
 
 
-
-
-
-
-
-// Function to get current date 
+// Function to get current date and time
 getCurrentDateTime();
 
+// Function to display our saved planner data from local storage
+displayPlannerData();
