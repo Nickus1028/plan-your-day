@@ -74,15 +74,14 @@ for (i=0; i< DayPlannerData.length; i++) {
         
         // Create text form, based on current time of day apply different classes / css and apply id
         var plannerForm = $("<textarea>").addClass("col-md-10 description").attr("id", DayPlannerData[i].id)
-        if (DayPlannerData[i].time === moment().format("HH")) {
+        if (DayPlannerData[i].time == moment().format("HH")) {
             plannerForm.addClass("present");
         } else if (DayPlannerData[i].time < moment().format("HH")) {
             plannerForm.addClass("past");
         } else if (DayPlannerData[i].time > moment().format("HH")) {
             plannerForm.addClass("future");
         }
-        console.log(DayPlannerData[i].time)
-        console.log(moment().format("HH"))
+        
 
         // Create save button HTML element
         var plannerButton = $("<button type=button>").addClass("col-md-1 saveBtn");
