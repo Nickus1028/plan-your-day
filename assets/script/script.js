@@ -9,7 +9,7 @@ function getCurrentDateTime() {
 
 var DayPlannerData = []
 
-// Create array for ID and element generation
+// Create array data
 // Since schedule is from 9 to 5 we start at 9 and end at 17
 
 for (time=9; time <=17; time++) {
@@ -43,6 +43,7 @@ for (time=9; time <=17; time++) {
         plannerData: plannerData,
     }
 
+    // Push data into our array
     DayPlannerData.push(plannerData)
 }
 
@@ -71,7 +72,7 @@ for (i=0; i< DayPlannerData.length; i++) {
         // Create display time
         var plannerTime = $("<div>").addClass("col-md-1 hour").text(DayPlannerData[i].displayHour + " " + DayPlannerData[i].amORpm);
         
-        // Create text form, based on current time of day apply different classes / css
+        // Create text form, based on current time of day apply different classes / css and apply id
         var plannerForm = $("<textarea>").addClass("col-md-10 description").attr("id", DayPlannerData[i].id)
         if (DayPlannerData[i].displayHour === moment().format("HH")) {
             plannerForm.addClass("present");
